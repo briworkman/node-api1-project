@@ -9,6 +9,19 @@ server.get("/", (req, res) => {
   res.send({ api: "up and running..." });
 });
 
+server.get("/users", (req, res) => {
+  db.find()
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(error => {
+      console.log(error, "error on GET /users");
+      res
+        .status(500)
+        .json({ errorMessage: "error getting users from database" });
+    });
+});
+
 const port = 4000;
 server.listen(port, () => {
   console.log(`\n ** API running on port ${port} ** \n`);
